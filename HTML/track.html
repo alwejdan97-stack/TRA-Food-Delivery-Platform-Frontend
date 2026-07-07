@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking - Codeline Eats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="tracking-body">
+
+    <main class="container tracking-container">
+        <!-- TOP BRAND BAR AREA -->
+        <section class="tracking-header">
+            <div class="tracking-header__title-group">
+                <span class="order-id-label">ORDER ORD-4821</span>
+                <h1 class="restaurant-name">Al Boom</h1>
+            </div>
+            <!-- Countdown Timer Card -->
+            <div class="eta-badge">
+                <span class="eta-label">ARRIVING IN</span>
+                <span class="eta-timer">14:32</span>
+            </div>
+        </section>
+
+        <!-- MIDDLE TIMELINE STEPS PROGRESS BAR -->
+        <section class="timeline-container">
+            <div class="timeline-progress-line">
+                <!-- Highlight bar matching progress -->
+                <div class="timeline-progress-fill" style="width: 33.33%;"></div>
+            </div>
+            
+            <div class="timeline-steps-wrapper">
+                <!-- Step 1: Completed -->
+                <div class="timeline-node step--completed">
+                    <div class="node-circle"></div>
+                    <span class="node-label">PENDING</span>
+                    <span class="node-time">10:02</span>
+                </div>
+                
+                <!-- Step 2: Active / Processing Current State -->
+                <div class="timeline-node step--active">
+                    <div class="node-circle"></div>
+                    <span class="node-label">PREPARING</span>
+                    <span class="node-time">10:09</span>
+                </div>
+                
+                <!-- Step 3: Upcoming -->
+                <div class="timeline-node">
+                    <div class="node-circle"></div>
+                    <span class="node-label">READY</span>
+                    <span class="node-time">—</span>
+                </div>
+                
+                <!-- Step 4: Upcoming -->
+                <div class="timeline-node">
+                    <div class="node-circle"></div>
+                    <span class="node-label">DELIVERED</span>
+                    <span class="node-time">—</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM DATA METRICS GRID SPLIT -->
+        <section class="tracking-details-grid">
+            
+            <!-- Left Data Column: Purchased Items Summary -->
+            <div class="details-panel items-panel">
+                <h3 class="panel-heading">ITEMS</h3>
+                <div class="receipt-list">
+                    <div class="receipt-row">
+                        <span class="item-name">Shawarma <span class="qty-multiply">×2</span></span>
+                        <span class="item-cost">1.000</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="item-name">Family Box <span class="qty-multiply">×1</span></span>
+                        <span class="item-cost">3.500</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="item-name">Hummus <span class="qty-multiply">×1</span></span>
+                        <span class="item-cost">0.600</span>
+                    </div>
+                </div>
+                <div class="receipt-total-row">
+                    <span>Total</span>
+                    <span class="total-currency">5.600 OMR</span>
+                </div>
+            </div>
+
+            <!-- Right Data Column: Driver Info Assignment Status -->
+            <div class="details-panel driver-panel">
+                <h3 class="panel-heading">DRIVER</h3>
+                <div class="driver-profile-card">
+                    <div class="driver-avatar-placeholder">👨‍🍳</div>
+                    <div class="driver-info-meta">
+                        <h4>Kareem</h4>
+                        <span class="vehicle-plate">🚗 A-12345</span>
+                    </div>
+                </div>
+                <div class="driver-status-row">
+                    <span class="status-lbl">Status</span>
+                    <span class="badge-status-pill">Preparing</span>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>

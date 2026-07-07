@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Codeline Eats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+
+    <main class="container admin-container">
+        <div class="endpoint-badge">Platform Overview</div>
+        <section class="metrics-grid">
+            <div class="metric-card metric-card--orders">
+                <span class="metric-title">ORDERS</span>
+                <div class="metric-value-row">
+                    <span class="metric-number">128</span>
+                </div>
+                <span class="metric-sub">today</span>
+            </div>
+
+            <div class="metric-card metric-card--revenue">
+                <span class="metric-title">REVENUE</span>
+                <div class="metric-value-row">
+                    <span class="metric-number">342.5</span>
+                </div>
+                <span class="metric-sub">OMR</span>
+            </div>
+
+            <div class="metric-card metric-card--avg">
+                <span class="metric-title">AVG ORDER</span>
+                <div class="metric-value-row">
+                    <span class="metric-number">2.67</span>
+                </div>
+                <span class="metric-sub">OMR</span>
+            </div>
+
+            <div class="metric-card metric-card--cancel">
+                <span class="metric-title">CANCEL RATE</span>
+                <div class="metric-value-row">
+                    <span class="metric-number">4.2%</span>
+                </div>
+                <span class="metric-sub">of orders</span>
+            </div>
+        </section>
+
+        <section class="dashboard-mid-grid">
+            
+            <div class="admin-panel busiest-panel">
+                <h3 class="panel-title">Busiest Hours</h3>
+                <div class="bar-chart-container">
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 25%;"></div>
+                        <span class="bar-label">10a</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 40%;"></div>
+                        <span class="bar-label">12p</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 65%;"></div>
+                        <span class="bar-label">1p</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 85%;"></div>
+                        <span class="bar-label">2p</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 90%;"></div>
+                        <span class="bar-label">7p</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 75%;"></div>
+                        <span class="bar-label">8p</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 55%;"></div>
+                        <span class="bar-label">9p</span>
+                    </div>
+                    <div class="bar-column">
+                        <div class="bar-fill" style="height: 30%;"></div>
+                        <span class="bar-label">10p</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-panel loyalty-panel">
+                <h3 class="panel-title">Top Loyalty Customers</h3>
+                <ul class="loyalty-list">
+                    <li class="loyalty-row">
+                        <div class="customer-info">
+                            <span class="rank-badge">1</span>
+                            <span class="customer-name">Sara Al-Harthy</span>
+                        </div>
+                        <span class="loyalty-points">1,240 <span class="pts-lbl">pts</span></span>
+                    </li>
+                    <li class="loyalty-row">
+                        <div class="customer-info">
+                            <span class="rank-badge">2</span>
+                            <span class="customer-name">Omar Nasser</span>
+                        </div>
+                        <span class="loyalty-points">980 <span class="pts-lbl">pts</span></span>
+                    </li>
+                    <li class="loyalty-row">
+                        <div class="customer-info">
+                            <span class="rank-badge">3</span>
+                            <span class="customer-name">Layla Said</span>
+                        </div>
+                        <span class="loyalty-points">870 <span class="pts-lbl">pts</span></span>
+                    </li>
+                    <li class="loyalty-row">
+                        <div class="customer-info">
+                            <span class="rank-badge">4</span>
+                            <span class="customer-name">Yusuf Kamal</span>
+                        </div>
+                        <span class="loyalty-points">645 <span class="pts-lbl">pts</span></span>
+                    </li>
+                    <li class="loyalty-row">
+                        <div class="customer-info">
+                            <span class="rank-badge">5</span>
+                            <span class="customer-name">Aisha Rahim</span>
+                        </div>
+                        <span class="loyalty-points">610 <span class="pts-lbl">pts</span></span>
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section class="admin-panel leaderboard-panel">
+            <h3 class="panel-title">Driver Leaderboard</h3>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>DRIVER</th>
+                        <th>COMPLETED</th>
+                        <th>RATING</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="driver-name-cell">Kareem A.</td>
+                        <td>42</td>
+                        <td class="rating-cell">★ 4.9</td>
+                    </tr>
+                    <tr>
+                        <td class="driver-name-cell">Bilal M.</td>
+                        <td>38</td>
+                        <td class="rating-cell">★ 4.8</td>
+                    </tr>
+                    <tr>
+                        <td class="driver-name-cell">Tariq S.</td>
+                        <td>35</td>
+                        <td class="rating-cell">★ 4.7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+</body>
+</html>
