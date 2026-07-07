@@ -71,8 +71,27 @@ body {
     gap: 10px; 
 }
 
-.app-header__logo-icon { 
+/*.app-header__logo-icon { 
     font-size: var(--fs-h2); 
+}*/
+
+.app-header__logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .app-header__title { 
