@@ -1,11 +1,11 @@
 /* ==========================================================================
    CODELINE EATS - DESIGN TOKENS & CORE RESET
    ========================================================================== */
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 :root {
@@ -46,41 +46,33 @@ body {
     max-width: 1200px; 
     margin: 0 auto; 
     padding: 0 20px; 
+    box-sizing: border-box;
 }
 
 /* ==========================================================================
-   HEADER BRAND BAR COMPONENT
+   APP HEADER & LOGO CONFIGURATION
    ========================================================================== */
-.app-header { 
-    background-color: var(--brand); 
-    color: var(--surface); 
-    padding: 16px 0; 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+.app-header {
+    background-color: var(--brand);
+    padding: 18px 0;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.app-header__wrapper { 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    gap: 20px; 
+.app-header__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
 
-.app-header__brand { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-}
-
-/*.app-header__logo-icon { 
-    font-size: var(--fs-h2); 
-}*/
-
-.app-header__logo-icon {
+.app-header__brand {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 12px;
 }
 
+.app-header__logo-icon img,
 .brand-logo-img {
     width: 40px;
     height: 40px;
@@ -88,262 +80,306 @@ body {
     display: block;
 }
 
-.brand-logo-area {
+.app-header__title {
+    font-size: var(--fs-h3);
+    font-weight: 800;
+    color: var(--surface);
+    letter-spacing: -0.3px;
+}
+
+/* Header Search Input */
+.header-search-box {
+    position: relative;
+    flex: 1;
+    max-width: 320px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.header-search-input {
+    width: 100%;
+    background-color: var(--surface);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 9px 16px 9px 36px;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    outline: none;
+}
+
+.app-header__meta {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.app-header__title { 
-    font-size: var(--fs-h3); 
-    font-weight: 700; 
+.location-badge {
+    font-size: var(--fs-body);
+    font-weight: 600;
+    color: #FFB300;
 }
 
-/* Header Contextual Search Elements */
-.header-search-box { 
-    position: relative; 
-    flex: 1; 
-    max-width: 480px; 
-    display: flex; 
-    align-items: center; 
-}
-
-.header-search-input { 
-    width: 100%; 
-    background: var(--surface); 
-    border: none; 
-    border-radius: var(--radius-sm); 
-    padding: 12px 16px 12px 40px; 
-    font-size: var(--fs-body); 
-    color: var(--ink); 
-}
-
-.search-icon { 
-    position: absolute; 
-    left: 14px; 
-    color: var(--muted); 
-    font-size: var(--fs-body); 
-}
-
-.app-header__meta { 
-    display: flex; 
-    align-items: center; 
-    gap: 20px; 
-}
-
-.location-badge { 
-    display: flex; 
-    align-items: center; 
-    gap: 6px; 
-    font-weight: 600; 
-    font-size: var(--fs-body); 
-}
-
-.user-avatar { 
-    width: 36px; 
-    height: 36px; 
-    background: rgba(255,255,255,0.2); 
-    border-radius: var(--radius-pill); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: var(--fs-body-lg); 
+.user-avatar {
+    background: rgba(255, 255, 255, 0.15);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--surface);
 }
 
 /* ==========================================================================
-   CUISINE CHIPS FILTER STRIP
+   FILTER CHIPS & RESTAURANT GRID STYLES
    ========================================================================== */
-.filters-container { 
-    margin: 24px 0; 
+.filters-container {
+    margin-bottom: 24px;
 }
 
-.filters-row { 
-    display: flex; 
-    gap: 12px; 
-    overflow-x: auto; 
-    padding-bottom: 4px; 
+.filters-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.chip { 
-    background: var(--surface); 
-    color: var(--ink); 
-    border: 1px solid #E0E6ED; 
-    border-radius: var(--radius-pill); 
-    padding: 8px 18px; 
-    font-size: var(--fs-body); 
-    font-weight: 500; 
-    cursor: pointer; 
-    white-space: nowrap; 
+.chip {
+    background-color: var(--surface);
+    border: 1px solid #E1E8F0;
+    color: var(--brand);
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-body);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
 }
 
-.chip--active { 
-    background: var(--brand); 
-    color: var(--surface); 
-    border-color: var(--brand); 
-    font-weight: 600; 
+.chip--active, .chip:hover {
+    background-color: var(--brand);
+    color: var(--surface);
+    border-color: var(--brand);
 }
 
-/* ==========================================================================
-   RESTAURANT GRID & CARDS SYSTEM
-   ========================================================================== */
-.restaurant-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-    gap: 24px; 
+.restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-.restaurant-card { 
-    background: var(--surface); 
-    border-radius: var(--radius); 
-    overflow: hidden; 
-    border: 1px solid #E6EDF5; 
-    display: flex; 
-    flex-direction: column; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02); 
+.restaurant-card {
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid #E6EDF5;
+    box-shadow: 0 4px 15px rgba(31, 78, 121, 0.04);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Diagonal Stripe Background Mockup Cover Visual Patterns */
-.restaurant-card__cover { 
-    height: 130px; 
-    position: relative; 
-    padding: 12px; 
-    display: flex; 
-    justify-content: flex-end; 
-    align-items: flex-start; 
+.restaurant-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(31, 78, 121, 0.08);
+}
+
+.restaurant-card__cover {
+    height: 110px;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    transition: filter 0.2s ease;
+}
+
+.restaurant-card:has(.status-badge--paused) .restaurant-card__cover {
+    filter: grayscale(40%);
+}
+
+.restaurant-card:has(.status-badge--paused) {
+    opacity: 0.88;
 }
 
 .pattern-coral {
-    background: repeating-linear-gradient(45deg, #fceae8, #fceae8 10px, #fbe3e0 10px, #fbe3e0 20px);
+    background: repeating-linear-gradient(45deg, #F2D5D5, #F2D5D5 10px, #EBB8B8 10px, #EBB8B8 20px);
 }
+
 .pattern-blue {
-    background: repeating-linear-gradient(45deg, #eaf2f8, #eaf2f8 10px, #deebf7 10px, #deebf7 20px);
+    background: repeating-linear-gradient(45deg, #D5E1F2, #D5E1F2 10px, #B8CCE8 10px, #B8CCE8 20px);
 }
+
 .pattern-tan {
-    background: repeating-linear-gradient(45deg, #fbf5e8, #fbf5e8 10px, #f7ebd3 10px, #f7ebd3 20px);
+    background: repeating-linear-gradient(45deg, #F5E8D0, #F5E8D0 10px, #E8D4B0 10px, #E8D4B0 20px);
 }
+
 .pattern-mint {
-    background: repeating-linear-gradient(45deg, #ebf7f2, #ebf7f2 10px, #def2e8 10px, #def2e8 20px);
+    background: repeating-linear-gradient(45deg, #D4EDDA, #D4EDDA 10px, #B8E2BE 10px, #B8E2BE 20px);
 }
+
 .pattern-green {
-    background: repeating-linear-gradient(45deg, #edf7ec, #edf7ec 10px, #e2f0d9 10px, #e2f0d9 20px);
+    background: repeating-linear-gradient(45deg, #D8F0DC, #D8F0DC 10px, #B5E0BC 10px, #B5E0BC 20px);
 }
 
-.status-badge { 
-    font-size: var(--fs-cap); 
-    font-weight: 600; 
-    padding: 4px 10px; 
-    border-radius: var(--radius-pill); 
+.status-badge {
+    font-size: var(--fs-cap);
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
 }
 
-.status-badge--open { 
-    background-color: #E2F0D9; 
-    color: var(--success); 
+.status-badge--open {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: var(--success);
 }
 
-.status-badge--paused { 
-    background-color: #EDEDED; 
-    color: var(--muted); 
+.status-badge--paused {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: var(--muted);
 }
 
-/* Card Content Details Layout */
-.restaurant-card__body { 
-    padding: 16px; 
-    display: flex; 
-    flex-direction: column; 
-    flex: 1; 
+.restaurant-card__body {
+    padding: 16px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
-.title-row { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 6px; 
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
 }
 
-.title-row h3 { 
-    font-size: var(--fs-body-lg); 
-    font-weight: 700; 
-    color: var(--ink); 
+.title-row h3 {
+    font-size: var(--fs-body-lg);
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0;
 }
 
-.rating { 
-    font-size: var(--fs-body); 
-    font-weight: 600; 
-    color: #F1C40F; 
+.rating {
+    font-size: var(--fs-body);
+    font-weight: 700;
+    color: #FFB300;
 }
 
-.cuisine-tag { 
-    background: var(--brand-tint); 
-    color: var(--brand); 
-    font-size: var(--fs-cap); 
-    font-weight: 500; 
-    padding: 2px 8px; 
-    border-radius: var(--radius-pill); 
-    width: fit-content; 
-    margin-bottom: 16px; 
+.cuisine-tag {
+    display: inline-block;
+    background-color: var(--brand-tint);
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    width: max-content;
+    transition: background-color 0.2s ease;
 }
 
-/* Metric Display Rows formatting */
-.metrics-row { 
-    display: flex; 
-    gap: 24px; 
-    margin-bottom: 16px; 
+.cuisine-tag:hover {
+    background-color: #CBE3F7;
 }
 
-.metric-field { 
-    display: flex; 
-    flex-direction: column; 
+.metrics-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: var(--fs-cap);
+    color: var(--muted);
 }
 
-.metric-label { 
-    font-size: 11px; 
-    color: var(--muted); 
-    margin-bottom: 2px; 
+.metric-field {
+    display: flex;
+    flex-direction: column;
 }
 
-.metric-value { 
-    font-size: var(--fs-body); 
-    font-weight: 700; 
-    color: var(--ink); 
+.metric-label {
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.metric-value {
+    font-weight: 800;
+    color: var(--ink);
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-body);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    margin-top: auto;
+}
+
+.btn--primary {
+    background-color: var(--brand);
+    color: var(--surface);
+}
+
+.btn--primary:hover {
+    opacity: 0.92;
+}
+
+.btn--secondary {
+    background-color: var(--surface);
+    color: var(--brand);
+    border: 1px solid var(--brand);
+}
+
+.btn--secondary:hover {
+    background-color: var(--brand-tint);
+}
+
+.btn--accent {
+    background-color: var(--accent);
+    color: var(--surface);
+}
+
+.btn--accent:hover {
+    opacity: 0.9;
+}
+
+.btn--disabled {
+    background-color: #E2E8F0;
+    color: var(--muted);
+    cursor: not-allowed;
 }
 
 /* ==========================================================================
-   BUTTONS & ACTION HANDLERS
+   RESPONSIVE MEDIA QUERIES
    ========================================================================== */
-.btn { 
-    width: 100%; 
-    border: none; 
-    padding: 10px 0; 
-    border-radius: var(--radius-sm); 
-    font-size: var(--fs-body); 
-    font-weight: 600; 
-    text-align: center; 
-    cursor: pointer; 
-    text-decoration: none; 
-    display: block; 
-}
-
-.btn--primary { 
-    background-color: var(--brand); 
-    color: var(--surface); 
-}
-
-.btn--disabled { 
-    background-color: #EAECEE; 
-    color: var(--muted); 
-    cursor: not-allowed; 
-}
-
-/* ==========================================================================
-   ADAPTIVE SCREEN RESPONSIVENESS MEDIA QUERIES
-   ========================================================================== */
-@media (max-width: 768px) {
-    .app-header__wrapper { 
-        flex-direction: column; 
-        align-items: stretch; 
+@media (max-width: 992px) {
+    .restaurant-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-    .header-search-box { 
-        max-width: 100%; 
+}
+
+@media (max-width: 576px) {
+    .restaurant-grid {
+        grid-template-columns: 1fr;
+    }
+    .app-header__wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .header-search-box {
+        max-width: 100%;
     }
 }
 /* ==========================================================================
