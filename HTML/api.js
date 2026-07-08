@@ -1,5 +1,5 @@
 // Base URL of the backend API
-const BASE_URL = "http://localhost:8080/api";
+export const BASE_URL = "http://localhost:8080/api";
 
 /* Custom API Error*/
 class ApiError extends Error {
@@ -11,41 +11,33 @@ class ApiError extends Error {
     }
 }
 
-/**
- * Generic API Request Function
- *
- * @param {string} endpoint
- * @param {Object} options
- * @param {string} options.method
- * @param {Object} options.body
- *
- * @returns {Promise<Object|null>}
- */
 export async function api(endpoint, options = {}) {
 
     const config = {
         method: options.method || "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: {}
     };
 
-    // Attach request body if provided
     if (options.body) {
+        config.headers["Content-Type"] = "application/json";
         config.body = JSON.stringify(options.body);
     }
 
     let response;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {controller.abort();}, 10000);
 
+    config.signal = controller.signal;
     try {
         response = await fetch(BASE_URL + endpoint, config);
+        clearTimeout(timeout);
     } catch (error) {
-        throw new ApiError(
-            "Cannot connect to the backend server. Make sure Spring Boot is running.",
-            0
-        );
+        clearTimeout(timeout);
+        if (error.name === "AbortError") {
+            throw new ApiError("Request timeout. Server took too long to respond.",408);
+        }
+    throw new ApiError("Cannot connect to backend server. Make sure Spring Boot is running.",0);
     }
-
     // No Content
     if (response.status === 204) {
         return null;
@@ -61,14 +53,9 @@ export async function api(endpoint, options = {}) {
 
     // Handling HTTP errors
     if (!response.ok) {
-        throw new ApiError(
-            data?.message || "Request failed.",
-            response.status,
-            data?.fieldErrors || null
-        );
+        throw new ApiError(data?.message || "Request failed.", response.status, data?.fieldErrors || null);
     }
 
     return data;
 }
-
 export { ApiError };
