@@ -1,5 +1,27 @@
 
 :root {
+    --bg:#f8fafc;
+    --border-color:#E6EDF5;
+    --brand-blue:#1F4E79;
+    --accent-orange:#D35400;
+    --accent-hover:#A04000;
+    --text-main:#1A252F;
+    --text-muted:#64748B;
+    --success-green:#22c55e;
+    --radius-md:10px;
+    --radius-lg:16px;
+    --space-4:16px;
+    --bg: #f8fafc;
+    --border-color: #E6EDF5;
+    --brand-blue: #1F4E79;
+    --accent-orange: #D35400;
+    --accent-hover: #A04000;
+    --text-main: #1A252F;
+    --text-muted: #64748B;
+    --success-green: #22c55e;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --space-4: 16px;
     --brand: #1e3a8a;
     --brand-tint: #eff6ff;
     --surface: #ffffff;
@@ -7,8 +29,6 @@
     --muted: #6b7280;
     --success: #22c55e;
     --danger: #ef4444;
-    
-    /* Border Radius & Font Tokens */
     --radius: 12px;
     --radius-sm: 6px;
     --radius-pill: 9999px;
@@ -29,12 +49,14 @@ body {
     background-color: var(--bg);
     color: var(--ink);
     line-height: 1.5;
+    --bg:#f8fafc;
 }
 
 .container {
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 var(--space-4);
+    --space-4:16px;
 }
 
 /*Restaurant css*/
@@ -435,6 +457,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 2px 6px rgba(31, 78, 121, 0.02);
+    min-height:120px;
 }
 
 .combo-info h4 {
