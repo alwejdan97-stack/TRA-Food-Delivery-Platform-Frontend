@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Codeline Eats</title>
     <link rel="stylesheet" href="style.css">
-    <script src="admin.html" defer></script>
-    <script src="api.js" defer></script>
+    <script type="module" src="admin.js"></script>
 </head>
 <body class="admin-body">
 
@@ -16,23 +15,21 @@
             <div class="metric-card metric-card--orders">
                 <span class="metric-title">ORDERS</span>
                 <div class="metric-value-row">
-                    <span class="metric-number">128</span>
-                </div>
+                <span id="metric-orders" class="metric-number">0</span>                </div>
                 <span class="metric-sub">today</span>
             </div>
 
             <div class="metric-card metric-card--revenue">
                 <span class="metric-title">REVENUE</span>
                 <div class="metric-value-row">
-                    <span class="metric-number">342.5</span>
-                </div>
+                <span id="metric-revenue" class="metric-number">0</span>                </div>
                 <span class="metric-sub">OMR</span>
             </div>
 
             <div class="metric-card metric-card--avg">
                 <span class="metric-title">AVG ORDER</span>
                 <div class="metric-value-row">
-                    <span class="metric-number">2.67</span>
+                <span id="metric-average" class="metric-number">0</span>
                 </div>
                 <span class="metric-sub">OMR</span>
             </div>
@@ -40,7 +37,7 @@
             <div class="metric-card metric-card--cancel">
                 <span class="metric-title">CANCEL RATE</span>
                 <div class="metric-value-row">
-                    <span class="metric-number">4.2%</span>
+                <span id="metric-cancel" class="metric-number">0</span>
                 </div>
                 <span class="metric-sub">of orders</span>
             </div>
@@ -88,8 +85,7 @@
 
             <div class="admin-panel loyalty-panel">
                 <h3 class="panel-title">Top Loyalty Customers</h3>
-                <ul class="loyalty-list">
-                    <li class="loyalty-row">
+                    <ul id="top-loyalty-list" class="loyalty-list">                    <li class="loyalty-row">
                         <div class="customer-info">
                             <span class="rank-badge">1</span>
                             <span class="customer-name">Sara Al-Harthy</span>

@@ -1,4 +1,4 @@
-// track.js - Live Order Tracking Behavior
+// track.js 
 import { api } from './api.js';
 
 const params = new URLSearchParams(window.location.search);
@@ -40,10 +40,15 @@ async function pollOrderData() {
 function updateTrackingUI(order, etaData) {
     const statusEl = document.getElementById('order-status-title');
     if (statusEl) statusEl.textContent = `Order ORD-${order.id} — ${order.status}`;
-    
+    updateTimeline(order.status);
     if (etaData && etaData.etaMinutes) {
         etaSeconds = etaData.etaMinutes * 60;
         startCountdown();
+    }
+
+    const orderIdEl = document.getElementById('order-id-label');
+    if (orderIdEl) {
+        orderIdEl.textContent = `ORDER ORD-${order.id}`;
     }
 }
 
@@ -62,4 +67,27 @@ function startCountdown() {
             clearInterval(countdownTimer);
         }
     }, 1000);
+}
+
+function updateTimeline(status) {
+    const steps = ["PENDING","PREPARING","READY","DELIVERED"];
+    const currentIndex =steps.indexOf(status);
+    document.querySelectorAll('.timeline-node').forEach((node, index) => {
+            node.classList.remove(
+                'step--completed',
+                'step--active'
+            );
+
+            if(index < currentIndex){
+                node.classList.add(
+                    'step--completed'
+                );
+            }
+
+            if(index === currentIndex){
+                node.classList.add(
+                    'step--active'
+                );
+            }
+        });
 }

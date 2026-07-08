@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codeline Eats Mockup Preview</title>
     <link rel="stylesheet" href="style.css">
-    <script src="index.js" defer></script>
-    <script src="api.js" defer></script>
+    <script type="module" src="index.js"></script>
 </head>
 <body>
 
@@ -20,7 +19,7 @@
             </div>
             <div class="header-search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" class="header-search-input" placeholder="Search restaurants..." value="Search restaurants...">
+                <input id="search-input" type="text" class="header-search-input" placeholder="Search restaurants...">
             </div>
             <div class="app-header__meta">
                 <div class="location-badge">📍 Al Khuwair</div>
@@ -32,17 +31,17 @@
     <div class="container">
         <section class="filters-container">
             <div class="filters-row">
-                <button class="chip chip--active">All</button>
-                <button class="chip">Arabic</button>
-                <button class="chip">Indian</button>
-                <button class="chip">Italian</button>
-                <button class="chip">Burgers</button>
-                <button class="chip">Japanese</button>
-                <button class="chip">Healthy</button>
+                <button class="chip chip--active" data-cuisine="All">All</button>
+                <button class="chip" data-cuisine="Arabic">Arabic</button>
+                <button class="chip" data-cuisine="Indian">Indian</button>
+                <button class="chip" data-cuisine="Italian">Italian</button>
+                <button class="chip" data-cuisine="Burgers">Burgers</button>
+                <button class="chip" data-cuisine="Japanese">Japanese</button>
+                <button class="chip" data-cuisine="Healthy">Healthy</button>
             </div>
         </section>
 
-        <section class="restaurant-grid">
+        <section id="restaurant-grid" class="restaurant-grid">
             
             <article class="restaurant-card">
                 <div class="restaurant-card__cover pattern-coral">

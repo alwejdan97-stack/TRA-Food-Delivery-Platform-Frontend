@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codeline Eats - Track Order</title>
     <link rel="stylesheet" href="style.css">
-    <script src="track.js" defer></script>
-    <script src="api.js" defer></script>
+    <script type="module" src="track.js"></script>
 </head>
 <body class="tracking-body">
 
     <main class="container tracking-container">
         <section class="tracking-header">
             <div class="tracking-header__title-group">
-                <span class="order-id-label">ORDER ORD-4821</span>
-                <h1 class="restaurant-name">Al Boom</h1>
+                <span id="order-id-label" class="order-id-label">ORDER ORD-4821</span>
+                <h1 id="order-status-title" class="restaurant-name">Al Boom</h1>
             </div>
             <div class="eta-badge">
                 <span class="eta-label">ARRIVING IN</span>
-                <span class="eta-timer">14:32</span>
+                <span id="live-countdown" class="eta-timer">14:32</span>
             </div>
         </section>
 
