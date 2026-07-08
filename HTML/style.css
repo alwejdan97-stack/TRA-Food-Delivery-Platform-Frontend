@@ -1,6 +1,4 @@
-/* ==========================================================================
-   CSS VARIABLES / SYSTEM TOKENS (Shared across both Devs)
-   ========================================================================== */
+
 :root {
     --brand: #1e3a8a;
     --brand-tint: #eff6ff;
@@ -20,9 +18,27 @@
     --fs-cap: 0.75rem;
 }
 
-/* ==========================================================================
-   APP HEADER & LOGO CONFIGURATION
-   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+}
+
+/*Restaurant css*/
+
 .app-header {
     background-color: var(--brand);
     padding: 18px 0;
@@ -108,7 +124,7 @@
     color: var(--surface);
 }
 
-/*FILTER CHIPS*/
+/*filltring*/
 .filters-container {
     margin-bottom: 24px;
 }
@@ -119,7 +135,7 @@
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 8px;
-    scrollbar-width: none; /* Hides default scrollbar for sleek UI look */
+    scrollbar-width: none;
 }
 .filters-row::-webkit-scrollbar {
     display: none;
@@ -145,9 +161,7 @@
     border-color: var(--brand);
 }
 
-/* ==========================================================================
-   RESTAURANT GRID STYLES (Dynamic Responsive Fluid Layout 1->3 Columns)
-   ========================================================================== */
+
 .restaurant-grid {
     display: grid;
     /* Fluid calculation guarantees 1 to 3 column distribution seamlessly */
@@ -332,11 +346,7 @@
     }
 }
 
-/* ==========================================================================
-   PAGE 2: MODERNIZED RESTAURANT MENU AND BASKET SUMMARY
-   ========================================================================== */
-
-/* 1. Header Information Context Block Elements Styling */
+/*menu, cart and order css */
 .menu-header {
     background-color: var(--surface);
     padding: 24px 0;
@@ -391,13 +401,16 @@
     font-weight: 700;
 }
 
-/* 2. Workspace Layout Split Screen Grid */
+/* ==========================================================================
+   Main Grid Layout
+   ========================================================================== */
 .workspace-grid {
     display: grid;
     grid-template-columns: 1fr 380px;
     gap: var(--space-5);
     margin-top: 32px;
     align-items: start;
+    padding-bottom: 60px;
 }
 
 .section-title {
@@ -422,7 +435,9 @@
     border-radius: var(--radius-pill);
 }
 
-/* 3. Horizontal Grid Combos Display Cards Layout */
+/* ==========================================================================
+   Combos Section & Cards (Exact horizontal reference layout)
+   ========================================================================== */
 .combos-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -436,6 +451,7 @@
     border-radius: var(--radius-lg);
     padding: var(--space-4);
     display: flex;
+    align-items: center;
     gap: var(--space-4);
     box-shadow: 0 4px 20px rgba(31, 78, 121, 0.02);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -446,10 +462,10 @@
     box-shadow: 0 6px 24px rgba(31, 78, 121, 0.06);
 }
 
-.item-thumb {
-    width: 72px;
-    height: 72px;
-    border-radius: var(--radius);
+.combo-card .item-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
 }
 
@@ -461,63 +477,59 @@
     background: repeating-linear-gradient(45deg, #FBF5E8, #FBF5E8 8px, #F7EBD3 8px, #F7EBD3 16px);
 }
 
-.item-details {
+.combo-card .item-details {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    justify-content: center;
 }
 
-.item-details h4 {
-    font-size: 16px;
+.combo-card .item-details h4 {
+    font-size: 15px;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
-.item-details p {
-    font-size: 13px;
+.combo-card .item-details p {
+    font-size: 12px;
     color: var(--muted);
-    margin-bottom: var(--space-3);
-    line-height: 1.4;
-    flex-grow: 1;
+    margin-bottom: 6px;
+    line-height: 1.3;
 }
 
-.price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.price-tag {
-    font-size: 16px;
+.combo-card .price-tag {
+    font-size: 14px;
     font-weight: 800;
-    color: var(--accent);
+    color: var(--ink);
 }
 
-.price-tag .currency {
+.combo-card .price-tag .currency {
     font-size: var(--fs-cap);
     font-weight: 500;
 }
 
-.btn-add {
+.combo-card .btn-add {
     background: var(--brand-tint);
     color: var(--brand);
     border: 1px solid transparent;
-    padding: 8px 16px;
-    border-radius: var(--radius-sm);
-    font-size: var(--fs-body);
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-cap);
     font-weight: 700;
     cursor: pointer;
+    flex-shrink: 0;
     transition: all 0.2s ease;
 }
 
-.btn-add:hover {
+.combo-card .btn-add:hover {
     background-color: var(--brand);
     color: var(--surface);
-    box-shadow: 0 4px 12px rgba(31, 78, 121, 0.15);
 }
 
-/* 4. Vertical List Stack Item Menu Component */
+/* ==========================================================================
+   Menu Stack Section & Rows
+   ========================================================================== */
 .menu-stack {
     display: flex;
     flex-direction: column;
@@ -600,7 +612,7 @@
     margin-right: var(--space-2);
 }
 
-/* 5. Item Metric Adjustment Inline Stepper Component */
+/* Stepper Component */
 .stepper {
     display: flex;
     align-items: center;
@@ -634,6 +646,24 @@
     font-variant-numeric: tabular-nums;
 }
 
+.btn-add {
+    background: var(--brand-tint);
+    color: var(--brand);
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-body);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-add:hover {
+    background-color: var(--brand);
+    color: var(--surface);
+    box-shadow: 0 4px 12px rgba(31, 78, 121, 0.15);
+}
+
 .btn-out {
     background: #F1F5F9;
     color: #94A3B8;
@@ -645,7 +675,9 @@
     cursor: not-allowed;
 }
 
-/* 6. Premium Sidebar Basket Container Components */
+/* ==========================================================================
+   Cart Sidebar Component
+   ========================================================================== */
 .cart-card {
     background: var(--surface);
     border: 1px solid #EAEFF5;
@@ -806,7 +838,9 @@
     border-radius: var(--radius-sm);
 }
 
-/* 7. Viewport Media Queries Layout Overrides */
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
 @media (max-width: 992px) {
     .workspace-grid {
         grid-template-columns: 1fr;
@@ -824,7 +858,7 @@
     .menu-row {
         flex-wrap: wrap;
     }
-    .stepper, .btn-add, .btn-out {
+    .stepper, .menu-row .btn-add, .btn-out {
         margin-left: auto;
         margin-top: var(--space-2);
         width: 100%;
@@ -835,11 +869,7 @@
     }
 }
 
-/* ==========================================================================
-   PAGE 3: ORDER STATUS TRACKING SPECIFIC COMPONENTS
-   ========================================================================== */
-
-/* Main workspace context layout wrapper defaults alignment */
+/*tracking css */
 .tracking-body {
     background-color: #F4F7FB;
     padding: 40px 0;
@@ -855,7 +885,7 @@
     max-width: 1000px;
 }
 
-/* 1. Header Profile & Timer Badge UI block */
+
 .tracking-header {
     display: flex;
     justify-content: space-between;
@@ -880,7 +910,7 @@
     letter-spacing: -0.5px;
 }
 
-/* ETA Timer Count Display Card block */
+
 .eta-badge {
     background-color: #DEEBF7;
     border-radius: 12px;
@@ -906,7 +936,6 @@
     line-height: 1.1;
 }
 
-/* 2. Horizontal Timeline Track Sequence Elements UI rules */
 .timeline-container {
     padding: 50px 60px 40px 60px;
     position: relative;
@@ -972,7 +1001,6 @@
     color: #94A3B8;
 }
 
-/* Timeline Custom Progressive Modifiers Node States */
 .step--completed .node-circle {
     background-color: #1F4E79;
     border-color: #1F4E79;
@@ -991,14 +1019,13 @@
     font-weight: 800;
 }
 
-/* 3. Bottom Grid Row Matrix details formatting definitions */
+
 .tracking-details-grid {
     display: grid;
     grid-template-columns: 1fr 1px 1fr;
     background-color: #FFFFFF;
 }
 
-/* Synthesizing the split grid vertical dividing line accurately */
 .tracking-details-grid > .details-panel:first-child {
     border-right: 1px solid #F1F5F9;
 }
@@ -1016,7 +1043,6 @@
     text-transform: uppercase;
 }
 
-/* Left panel receipt rows details formatting */
 .receipt-list {
     display: flex;
     flex-direction: column;
@@ -1061,7 +1087,6 @@
     color: #1F4E79;
 }
 
-/* Right Panel Driver specific metadata rules */
 .driver-profile-card {
     display: flex;
     align-items: center;
@@ -1111,7 +1136,6 @@
     font-weight: 700;
 }
 
-/* Responsive Overrides Media Viewports query layers */
 @media (max-width: 768px) {
     .tracking-details-grid {
         grid-template-columns: 1fr;
@@ -1143,9 +1167,7 @@
     }
 }
 
-/* ==========================================================================
-   ADMIN DASHBOARD SPECIFIC COMPONENTS
-   ========================================================================== */
+/* admin css */
 
 .admin-body {
     background-color: #F4F7FB;
@@ -1161,7 +1183,6 @@
     max-width: 1100px;
 }
 
-/* 1. Metrics Grid (Top 4 Cards) */
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1214,7 +1235,6 @@
     display: block;
 }
 
-/* 2. Middle Grid (Busiest Hours & Loyalty) */
 .dashboard-mid-grid {
     display: grid;
     grid-template-columns: 1fr 380px;
@@ -1238,7 +1258,6 @@
     letter-spacing: -0.2px;
 }
 
-/* Bar Chart Styles */
 .bar-chart-container {
     display: flex;
     justify-content: space-between;
@@ -1272,7 +1291,6 @@
     margin-top: 8px;
 }
 
-/* Top Loyalty Customers List */
 .loyalty-list {
     display: flex;
     flex-direction: column;
@@ -1326,7 +1344,6 @@
     color: #94A3B8;
 }
 
-/* 3. Driver Leaderboard Table */
 .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
@@ -1374,282 +1391,6 @@
     font-variant-numeric: tabular-nums;
 }
 
-/* Responsive Viewports */
-@media (max-width: 992px) {
-    .metrics-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .dashboard-mid-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 576px) {
-    .metrics-grid {
-        grid-template-columns: 1fr;
-    }
-    .admin-container {
-        padding: 16px;
-    }
-}
-
-/* ==========================================================================
-   ADMIN DASHBOARD CORE STYLES
-   ========================================================================== */
-
-.admin-body {
-    background-color: #F4F7FB;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    margin: 0;
-    padding: 32px 0;
-    color: #1E293B;
-}
-
-.container {
-    width: 100%;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 16px;
-    box-sizing: border-box;
-}
-
-.admin-container {
-    background: #FFFFFF;
-    border-radius: 16px;
-    border: 1px solid #E6EDF5;
-    box-shadow: 0 10px 30px rgba(31, 78, 121, 0.04);
-    padding: 32px;
-}
-
-/* Endpoint / Context Badge */
-.endpoint-badge {
-    display: inline-block;
-    background-color: #DEEBF7;
-    color: #1F4E79;
-    font-size: 13px;
-    font-weight: 800;
-    padding: 6px 14px;
-    border-radius: 8px;
-    letter-spacing: 0.5px;
-    margin-bottom: 24px;
-    text-transform: uppercase;
-}
-
-/* 1. Metrics Grid (Top 4 Cards) */
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 28px;
-}
-
-.metric-card {
-    background: #FFFFFF;
-    border: 1px solid #EAEFF5;
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 4px 15px rgba(31, 78, 121, 0.02);
-    border-left-width: 4px;
-    border-left-style: solid;
-}
-
-.metric-card--orders { border-left-color: #1F4E79; }
-.metric-card--revenue { border-left-color: #548235; }
-.metric-card--avg { border-left-color: #2E75B6; }
-.metric-card--cancel { border-left-color: #C0392B; }
-
-.metric-title {
-    font-size: 11px;
-    font-weight: 800;
-    color: #64748B;
-    letter-spacing: 0.8px;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.metric-value-row {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-}
-
-.metric-number {
-    font-size: 32px;
-    font-weight: 900;
-    color: #1E293B;
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
-}
-
-.metric-sub {
-    font-size: 12px;
-    font-weight: 600;
-    color: #94A3B8;
-    margin-top: 4px;
-    display: block;
-}
-
-/* 2. Middle Grid (Busiest Hours & Loyalty) */
-.dashboard-mid-grid {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 24px;
-    margin-bottom: 24px;
-}
-
-.admin-panel {
-    background: #FFFFFF;
-    border: 1px solid #EAEFF5;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 15px rgba(31, 78, 121, 0.02);
-}
-
-.panel-title {
-    font-size: 15px;
-    font-weight: 800;
-    color: #1E293B;
-    margin-top: 0;
-    margin-bottom: 20px;
-    letter-spacing: -0.2px;
-}
-
-/* Bar Chart Styling */
-.bar-chart-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 160px;
-    padding-top: 20px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #F1F5F9;
-}
-
-.bar-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    height: 100%;
-    justify-content: flex-end;
-}
-
-.bar-fill {
-    width: 28px;
-    background: linear-gradient(180deg, #2E75B6 0%, #1F4E79 100%);
-    border-radius: 4px 4px 0 0;
-}
-
-.bar-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: #94A3B8;
-    margin-top: 8px;
-}
-
-/* Top Loyalty Customers List */
-.loyalty-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.loyalty-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    padding: 4px 0;
-}
-
-.customer-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.rank-badge {
-    width: 22px;
-    height: 22px;
-    background-color: #DEEBF7;
-    color: #1F4E79;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.customer-name {
-    font-weight: 700;
-    color: #334155;
-}
-
-.loyalty-points {
-    font-weight: 800;
-    color: #1E293B;
-    font-variant-numeric: tabular-nums;
-}
-
-.pts-lbl {
-    font-size: 11px;
-    font-weight: 500;
-    color: #94A3B8;
-}
-
-/* 3. Driver Leaderboard Table */
-.leaderboard-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.leaderboard-table th {
-    font-size: 11px;
-    font-weight: 800;
-    color: #64748B;
-    letter-spacing: 0.8px;
-    text-align: left;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #EAEFF5;
-}
-
-.leaderboard-table th:nth-child(2),
-.leaderboard-table td:nth-child(2) {
-    text-align: left;
-}
-
-.leaderboard-table th:last-child,
-.leaderboard-table td:last-child {
-    text-align: right;
-}
-
-.leaderboard-table td {
-    padding: 14px 0;
-    font-size: 14px;
-    border-bottom: 1px solid #F8FAFC;
-    color: #334155;
-}
-
-.leaderboard-table tr:last-child td {
-    border-bottom: none;
-}
-
-.driver-name-cell {
-    font-weight: 700;
-    color: #1E293B;
-}
-
-.rating-cell {
-    color: #FFB300;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-}
-
-/* Responsive Viewports */
 @media (max-width: 992px) {
     .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
