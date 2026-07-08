@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codeline Eats - Menu</title>
+    <title>Al Boom - Menu & Cart</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="menu.js" defer></script>
 </head>
 <body>
 
     <header class="menu-header">
         <div class="container menu-header__wrapper">
-            <button class="back-btn" onclick="window.history.back()">←</button>
+            <button class="back-btn" onclick="window.history.back()">Back</button>
             <div class="restaurant-meta">
                 <h1>Al Boom</h1>
-                <p>Arabic • <span class="star-rating">★ 4.6</span> • 25-35 min</p>
+                <p>Arabic <span class="dot">•</span> <span class="star-rating">★ 4.6</span></p>
             </div>
         </div>
     </header>
@@ -23,163 +23,112 @@
         
         <section class="menu-catalog">
             
-            <h3 class="section-title">Combos</h3>
+            <div class="category-label">COMBOS</div>
             <div class="combos-grid">
-
-                <div class="combo-card">
-                    <div class="item-thumb pattern-diagonal"></div>
-                    <div class="item-details">
+                <div class="combo-card" data-name="Family Box" data-price="3.500">
+                    <div class="combo-info">
                         <h4>Family Box</h4>
-                        <p>Serves 3-4 • mixed grill, rice, salad</p>
-                        <div class="price-row">
-                            <span class="price-tag">3.500 <span class="currency">OMR</span></span>
-                            <button class="btn-add">+ Add</button>
-                        </div>
+                        <div class="combo-price">3.500 OMR</div>
                     </div>
+                    <button class="btn-add-combo js-add-btn">Add</button>
                 </div>
 
-                <div class="combo-card">
-                    <div class="item-thumb pattern-tan"></div>
-                    <div class="item-details">
+                <div class="combo-card" data-name="Lunch Deal" data-price="2.000">
+                    <div class="combo-info">
                         <h4>Lunch Deal</h4>
-                        <p>Wrap + side + soft drink</p>
-                        <div class="price-row">
-                            <span class="price-tag">2.000 <span class="currency">OMR</span></span>
-                            <button class="btn-add">+ Add</button>
-                        </div>
+                        <div class="combo-price">2.000 OMR</div>
                     </div>
+                    <button class="btn-add-combo js-add-btn">Add</button>
                 </div>
             </div>
 
-            <h3 class="section-title">Menu</h3>
+            <div class="category-label">MENU</div>
             <div class="menu-stack">
-
-                <div class="menu-row">
+                
+                <div class="menu-row js-menu-item" data-name="Shawarma" data-price="0.500">
                     <div class="menu-row__thumb"></div>
                     <div class="menu-row__info">
                         <h4>Shawarma</h4>
-                        <p>320 kcal</p>
+                        <p>veg <span class="dot">✓</span> 320 kcal</p>
                     </div>
                     <div class="menu-row__price">0.500</div>
-                    <div class="stepper">
-                        <button class="stepper-btn">−</button>
-                        <span class="stepper-value">2</span>
-                        <button class="stepper-btn">+</button>
+                    <div class="stepper active">
+                        <button class="stepper-btn js-minus">−</button>
+                        <span class="stepper-value js-qty">2</span>
+                        <button class="stepper-btn js-plus">+</button>
                     </div>
                 </div>
                 
-                <div class="menu-row">
+                <div class="menu-row js-menu-item" data-name="Hummus" data-price="0.600">
                     <div class="menu-row__thumb"></div>
                     <div class="menu-row__info">
-                        <h4>Hummus <span class="veg-indicator">✔ Veg</span></h4>
-                        <p>Veg • 210 kcal</p>
+                        <h4>Hummus</h4>
+                        <p>veg <span class="dot">✓</span></p>
                     </div>
                     <div class="menu-row__price">0.600</div>
-                    <div class="stepper">
-                        <button class="stepper-btn">−</button>
-                        <span class="stepper-value">1</span>
-                        <button class="stepper-btn">+</button>
-                    </div>
+                    <button class="btn-add js-add-btn">Add</button>
                 </div>
                 
-                <div class="menu-row">
+                <div class="menu-row js-menu-item" data-name="Grilled Chicken" data-price="1.200">
                     <div class="menu-row__thumb"></div>
                     <div class="menu-row__info">
                         <h4>Grilled Chicken</h4>
-                        <p>540 kcal</p>
+                        <p>480 kcal</p>
                     </div>
                     <div class="menu-row__price">1.200</div>
-                    <button class="btn-add">+ Add</button>
+                    <button class="btn-add js-add-btn">Add</button>
                 </div>
                 
-                <div class="menu-row">
+                <div class="menu-row menu-row--disabled" data-name="Sayadiyah" data-price="1.400">
                     <div class="menu-row__thumb"></div>
                     <div class="menu-row__info">
-                        <h4>Falafel Wrap <span class="veg-indicator">✔ Veg</span></h4>
-                        <p>Veg • 300 kcal</p>
+                        <h4>Sayadiyah</h4>
+                        <p>out of stock</p>
                     </div>
-                    <div class="menu-row__price">0.450</div>
-                    <button class="btn-add">+ Add</button>
+                    <div class="menu-row__price">1.400</div>
+                    <button class="btn-out" disabled>Out</button>
                 </div>
-                
-                <div class="menu-row menu-row--disabled">
-                    <div class="menu-row__thumb"></div>
-                    <div class="menu-row__info">
-                        <h4>Mixed Grill</h4>
-                        <p>720 kcal • Out of stock</p>
-                    </div>
-                    <div class="menu-row__price">2.800</div>
-                    <button class="btn-out" disabled>Out of stock</button>
-                </div>
-                
-                
-                <div class="menu-row">
-                    <div class="menu-row__thumb"></div>
-                    <div class="menu-row__info">
-                        <h4>Fattoush <span class="veg-indicator">✔ Veg</span></h4>
-                        <p>Veg • 180 kcal</p>
-                    </div>
-                    <div class="menu-row__price">0.700</div>
-                    <button class="btn-add">+ Add</button>
-                </div>
+
             </div>
         </section>
 
         <aside class="cart-sidebar">
             <div class="cart-card">
-                <div class="cart-title-bar">
-                    <h2>🛒 Your Cart</h2>
-                    <span class="cart-count">4</span>
-                </div>
+                <h2>Your Cart</h2>
 
-                <div class="cart-items-list">
-                    
+                <div class="cart-items-list" id="cart-items-container">
                     <div class="cart-line-row">
-                        <div class="cart-item-meta">
-                            <h5>Shawarma</h5>
-                            <p>0.500 OMR each</p>
-                        </div>
-                        <div>
-                            <span class="cart-qty-val">× 2</span>
-                            <span class="cart-line-total">1.000</span>
-                        </div>
+                        <span class="cart-item-name">Shawarma ×2</span>
+                        <span class="cart-line-total">1.000</span>
                     </div>
-                    
                     <div class="cart-line-row">
-                        <div class="cart-item-meta">
-                            <h5>Hummus</h5>
-                            <p>0.600 OMR each</p>
-                        </div>
-                        <div>
-                            <span class="cart-qty-val">× 1</span>
-                            <span class="cart-line-total">0.600</span>
-                        </div>
+                        <span class="cart-item-name">Hummus ×1</span>
+                        <span class="cart-line-total">0.600</span>
                     </div>
-                    
                     <div class="cart-line-row">
-                        <div class="cart-item-meta">
-                            <h5>Family Box</h5>
-                            <p>3.500 OMR each</p>
-                        </div>
-                        <div>
-                            <span class="cart-qty-val"> 1</span>
-                            <span class="cart-line-total">3.500</span>
-                        </div>
+                        <span class="cart-item-name">Family Box ×1</span>
+                        <span class="cart-line-total">3.500</span>
                     </div>
                 </div>
 
                 <hr class="summary-divider">
-                <div class="ledger-row"><span>Subtotal</span><span>5.100</span></div>
-                <div class="ledger-row"><span>Delivery fee</span><span>0.500</span></div>
                 
-                <hr class="summary-divider--dashed">
+                <div class="ledger-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal-val">5.100</span>
+                </div>
+                <div class="ledger-row">
+                    <span>Delivery</span>
+                    <span>0.500</span>
+                </div>
+                
                 <div class="ledger-row ledger-row--total">
-                    <span>Total</span>
-                    <span class="total-val">5.600 OMR</span>
+                    <span>TOTAL</span>
+                    <span class="total-val" id="total-val">5.600</span>
                 </div>
 
                 <button class="btn-order">Place Order</button>
-                <div class="min-order-status">Min order 2.000 OMR met ✓</div>
+                <div class="min-order-status">min order 2.000 met</div>
             </div>
         </aside>
     </main>
