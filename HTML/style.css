@@ -665,6 +665,8 @@ body {
     color: var(--success-green);
 }
 
+/*responsive*/
+
 @media (max-width: 768px) {
     .workspace-grid {
         grid-template-columns: 1fr;

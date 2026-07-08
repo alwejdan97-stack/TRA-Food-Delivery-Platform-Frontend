@@ -1,27 +1,41 @@
-const BASE_URL = "http://localhost:8080/api";
+// api.js used to connect with back-end code
+const BASE = 'http://localhost:8080/api';
 
-async function getData(endpoint) {
-    const response = await fetch(BASE_URL + endpoint);
-
-    if (!response.ok) {
-        throw new Error("Request Failed");
+class ApiError extends Error {
+    constructor(msg, status, fieldErrors) {
+        super(msg);
+        this.status = status;
+        this.fieldErrors = fieldErrors;
     }
-
-    return await response.json();
 }
 
-async function postData(endpoint, data) {
-    const response = await fetch(BASE_URL + endpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    });
+async function api(path, { method = 'GET', body = null } = {}) {
+    const options = {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined,
+    };
 
-    if (!response.ok) {
-        throw new Error("Request Failed");
+    let res;
+    try {
+        res = await fetch(BASE + path, options);
+    } catch (networkError) {
+        throw new ApiError('Network connection failed. Please check if the backend is running.', 0);
     }
 
-    return await response.json();
+    if (res.status === 204) {
+        return null;
+    }
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok) {
+        throw new ApiError(
+            data?.message || 'Request failed', 
+            res.status, 
+            data?.fieldErrors
+        );
+    }
+
+    return data;
 }
