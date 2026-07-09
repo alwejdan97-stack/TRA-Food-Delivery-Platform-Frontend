@@ -5,106 +5,36 @@ let activeCuisine = "All";
 let searchQuery = "";
 
 document.addEventListener("DOMContentLoaded", () => {
-    initBrowse();
+    setupFilters();
+    setupMenuButtons();
 });
 
-async function initBrowse() {
-
-    try {
-        allRestaurants = await api("/restaurants");
-        console.log(allRestaurants);
-        renderRestaurants();
-        setupBrowseListeners();
-
-    } catch (error) {
-
-        console.error(error);
-        document.getElementById("restaurant-grid").innerHTML ="<h2>Unable to load restaurants.</h2>";
-
-    }
-
-}
-
-function setupBrowseListeners() {
-    const searchInput = document.getElementById("search-input");
-    searchInput.addEventListener("input", function () {
-        searchQuery = this.value.toLowerCase();
-        renderRestaurants();
-    });
-
+function setupFilters(){
+    const cards = document.querySelectorAll(".restaurant-card");
     document.querySelectorAll(".chip").forEach(chip => {
-
-        chip.addEventListener("click", function () {
-
-            document.querySelectorAll(".chip")
-                .forEach(c => c.classList.remove("chip--active"));
-
+        chip.addEventListener("click", function(){
+            document.querySelectorAll(".chip").forEach(c => c.classList.remove("chip--active"));
             this.classList.add("chip--active");
-
-            activeCuisine = this.dataset.cuisine;
-
-            renderRestaurants();
-
+            const selectedCuisine = this.dataset.cuisine;
+            cards.forEach(card => {
+                const cardCuisine = card.dataset.cuisine;
+                if(selectedCuisine === "All" ||
+                   cardCuisine === selectedCuisine){
+                    card.style.display = "flex";
+                }else{
+                    card.style.display = "none";
+                }
+            });
         });
-
     });
-
 }
 
-function renderRestaurants() {
-    const gridEl = document.getElementById("restaurant-grid");
-    let filtered = allRestaurants.filter(r => {
-        const cuisineMatch =
-            activeCuisine === "All" ||
-            r.cuisineType === activeCuisine;
-        const searchMatch =
-            r.name.toLowerCase().includes(searchQuery);
-        return cuisineMatch && searchMatch;
+function setupMenuButtons(){
+    document.querySelectorAll(".restaurant-card .btn--primary").forEach((button,index)=>{
+        button.addEventListener("click",()=>{
+            const card = button.closest(".restaurant-card");
+            const id = card.dataset.id;
+            window.location.href =`menu.html?restaurantId=${id}`;
+        });
     });
-
-    gridEl.innerHTML = "";
-
-    filtered.forEach(r => {
-
-        gridEl.innerHTML += `<article class="restaurant-card">
-            <div class="restaurant-card__cover pattern-coral">
-                <span class="status-badge ${r.acceptingOrders ? "status-badge--open" : "status-badge--paused"}">
-                    ${r.acceptingOrders ? "Open" : "Paused"}
-                </span>
-            </div>
-
-            <div class="restaurant-card__body">
-
-                <div class="title-row">
-                    <h3>${r.name}</h3>
-                    <span class="rating">★ ${r.averageRating ?? "0.0"}</span>
-                </div>
-
-                <div class="cuisine-tag">${r.cuisineType}</div>
-
-                <div class="metrics-row">
-                    <div class="metric-field">
-                        <span class="metric-label"> Delivery </span>
-
-                        <span class="metric-value"> ${Number(r.deliveryFee).toFixed(3)} </span>
-                    </div>
-
-                    <div class="metric-field">
-                        <span class="metric-label"> Min </span>
-
-                        <span class="metric-value"> ${Number(r.minOrderAmount).toFixed(3)} </span>
-                    </div>
-                </div>
-
-                <button class="btn btn--primary" onclick="location.href='menu.html?restaurantId=${r.id}'"> View Menu </button>
-            </div>
-        </article>`;
-    });
-
-    document.querySelectorAll(".view-menu-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        window.location.href = `menu.html?restaurantId=${id}`;
-    });
-});
 }

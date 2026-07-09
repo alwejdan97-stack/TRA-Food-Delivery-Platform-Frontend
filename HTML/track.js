@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) clearInterval(pollInterval);
         else pollInterval = setInterval(pollOrderData, 5000);
-    });
+        });
     
     });
 
