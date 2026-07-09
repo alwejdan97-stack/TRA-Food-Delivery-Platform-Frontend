@@ -12,14 +12,14 @@ async function initBrowse() {
 
     try {
         allRestaurants = await api("/restaurants");
+        console.log(allRestaurants);
         renderRestaurants();
         setupBrowseListeners();
 
     } catch (error) {
 
         console.error(error);
-        document.getElementById("restaurant-grid").innerHTML =
-            "<h2>Unable to load restaurants.</h2>";
+        document.getElementById("restaurant-grid").innerHTML ="<h2>Unable to load restaurants.</h2>";
 
     }
 
@@ -98,7 +98,13 @@ function renderRestaurants() {
 
                 <button class="btn btn--primary" onclick="location.href='menu.html?restaurantId=${r.id}'"> View Menu </button>
             </div>
-        </article>
-        `;
+        </article>`;
     });
+
+    document.querySelectorAll(".view-menu-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
+        window.location.href = `menu.html?restaurantId=${id}`;
+    });
+});
 }

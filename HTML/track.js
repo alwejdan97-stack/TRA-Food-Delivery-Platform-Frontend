@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.hidden) clearInterval(pollInterval);
         else pollInterval = setInterval(pollOrderData, 5000);
     });
-});
+    
+    });
 
 async function pollOrderData() {
     try {
@@ -73,21 +74,14 @@ function updateTimeline(status) {
     const steps = ["PENDING","PREPARING","READY","DELIVERED"];
     const currentIndex =steps.indexOf(status);
     document.querySelectorAll('.timeline-node').forEach((node, index) => {
-            node.classList.remove(
-                'step--completed',
-                'step--active'
-            );
+            node.classList.remove('step--completed','step--active');
 
             if(index < currentIndex){
-                node.classList.add(
-                    'step--completed'
-                );
+                node.classList.add('step--completed');
             }
 
             if(index === currentIndex){
-                node.classList.add(
-                    'step--active'
-                );
+                node.classList.add('step--active');
             }
         });
 }

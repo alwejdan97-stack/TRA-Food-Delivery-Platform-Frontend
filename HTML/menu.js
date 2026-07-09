@@ -10,10 +10,19 @@ let menuItems = [];
 let combos = [];
 let cart = [];
 
-document.addEventListener('DOMContentLoaded', initMenu);
+document.addEventListener('DOMContentLoaded', () => {
+    initMenu();    
+    const backBtn = document.querySelector('.back-btn');
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.location.href = "index.html";
+        });
+    }
+});
 
 async function initMenu() {
     const mainEl = document.querySelector('.workspace-grid');
+    if(!mainEl) return;
     mainEl.innerHTML = "<p>Loading...</p>";
     try {
         [restaurant, menuItems, combos] = await Promise.all([
@@ -37,8 +46,7 @@ function renderMenuInterface() {
             <div class="category-label">COMBOS</div>
 
             <div class="combos-grid">
-                ${(combos || []).map(combo => `
-                    <div class="combo-card">
+                ${(combos || []).map(combo => `<div class="combo-card">
                         <div class="combo-info">
                             <h4>${escapeHtml(combo.name)}</h4>
                             <div class="combo-price">
@@ -46,9 +54,8 @@ function renderMenuInterface() {
                             </div>
                         </div>
 
-                        <button class="btn-add-combo" onclick="window.addCartLine(null, ${combo.id}, '${escapeHtml(combo.name)}', ${combo.price})"> Add </button>
-                    </div>
-                `).join('')}
+                        <button class="btn-add-combo" onclick="window.addCartLine(null, ${combo.id}, '${escapeAttribute(combo.name)}', ${combo.price})"> Add </button>
+                    </div>`).join('')}
             </div>
 
             <div class="category-label"> MENU</div>
@@ -65,14 +72,12 @@ function renderMenuInterface() {
                 <div class="menu-row__price">
                     ${Number(item.price).toFixed(3)} OMR
                 </div>
-                <button class="btn-add" onclick="window.addCartLine(${item.id}, null, '${escapeHtml(item.name)}', ${item.price})"> Add</button>
-            </div>
-        `).join('')
+                <button class="btn-add" onclick="window.addCartLine(${item.id}, null, '${escapeAttribute(item.name)}', ${item.price})"> Add</button>
+            </div>`).join('')
     }
 
             </div>
-        </div>
-    `;
+        </div>`;
 }
 
 window.addCartLine = function(
@@ -85,12 +90,15 @@ window.addCartLine = function(
         existing.qty++;
     } else {
         cart.push({menuItemId,comboMealId,name,unitPrice,qty:1
-
         });
     }
-    renderMenuInterface();
+    console.log(cart);
 };
 
 function escapeHtml(text){
     return String(text).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+function escapeAttribute(text){
+    return String(text).replaceAll("&","&amp;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
