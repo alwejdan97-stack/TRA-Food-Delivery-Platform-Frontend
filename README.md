@@ -19,12 +19,15 @@ A simple Food Delivery Platform frontend built with **HTML, CSS, and JavaScript*
 Food-Delivery-Frontend/
 │
 ├── index.html
-├── restaurants.html
+├── admin.html
 ├── menu.html
+├── track.html
 ├── style.css
 ├── api.js
-├── restaurants.js
+├── admin.js
 ├── menu.js
+├── track.js
+├── index.js
 ├── assets/
 ├── screenshots/
 └── README.md
