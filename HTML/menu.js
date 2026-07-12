@@ -11,390 +11,210 @@ let combos = [];
 let cart = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    initMenu();    
+    // 1. Parse initial pre-rendered cart from HTML before init
+    initCartFromDOM();
+    
+    // 2. Fetch data (if you want to override or keep API sync)
+    initMenu();
+
     const backBtn = document.querySelector('.back-btn');
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             window.location.href = "index.html";
         });
     }
-    /*setupStepperButtons();*/
 });
+
+// Seed the JS cart array using the static HTML items on load
+function initCartFromDOM() {
+    const itemRows = document.querySelectorAll("#cart-items-container .cart-line-row");
+    cart = [];
+
+    itemRows.forEach(row => {
+        const nameText = row.querySelector(".cart-item-name")?.textContent || "";
+        const totalText = row.querySelector(".cart-line-total")?.textContent || "0";
+
+        // Parse format like "Shawarma ×2"
+        const parts = nameText.split("×");
+        if (parts.length === 2) {
+            const name = parts[0].trim();
+            const qty = Number(parts[1].trim());
+            const total = Number(totalText);
+            const unitPrice = qty > 0 ? total / qty : 0;
+
+            cart.push({ name, unitPrice, qty });
+        }
+    });
+
+    renderCart();
+}
 
 async function initMenu() {
     try {
-        [restaurant, menuItems, combos] = await Promise.all([
+        const results = await Promise.allSettled([
             api(`/restaurants/${RESTAURANT_ID}`),
             api(`/restaurants/${RESTAURANT_ID}/menu`),
             api(`/restaurants/${RESTAURANT_ID}/combos`)
         ]);
 
-        console.log("Restaurant:", restaurant);
-        console.log("Menu Items:", menuItems);
-        console.log("Combos:", combos);
-
-        /*updateRestaurantInfo();
-        renderMenuFromAPI();
-        console.log("Buttons:", document.querySelectorAll(".js-add-btn").length);
-        console.log("Plus:", document.querySelectorAll(".js-plus").length);
-        console.log("Minus:", document.querySelectorAll(".js-minus").length);        
-        setupAddButtons();
-        setupStepperButtons();*/
-
-        renderMenuFromAPI();
-        setupAddButtons();
-        setupStepperButtons();
-
-    } catch (err) {
-        console.error("Loading error:",err);
-    }
-}
-
-function updateRestaurantInfo(){
-
-    if(!restaurant) return;
-
-    const title =document.querySelector(".restaurant-meta h1");
-
-    const details =document.querySelector(".restaurant-meta p");
-
-    if(title){
-        title.textContent = restaurant.name;
-    }
-
-    if(details){
-        details.innerHTML = `${restaurant.cuisineType}
-        <span class="dot">•</span>
-        <span class="star-rating">
-        ★ ${restaurant.averageRating ?? "0.0"}
-        </span>`;
-    }
-}
-
-function renderMenuFromAPI(){
-    const combosContainer = document.querySelector(".combos-grid");
-    const menuContainer = document.querySelector(".menu-stack");
-
-    if(combosContainer){
-        combosContainer.innerHTML = combos.map(combo => `
-            <div class="combo-card"
-                 data-name="${combo.name}"
-                 data-price="${combo.price}">
-
-                <div class="combo-info">
-                    <h4>${combo.name}</h4>
-                    <div class="combo-price">
-                        ${Number(combo.price).toFixed(3)} OMR
-                    </div>
-                </div>
-
-                <button class="btn-add-combo js-add-btn">Add</button>
-
-                <div class="stepper active" style="display:none;">
-                <button class="stepper-btn js-minus">−</button>
-                <span class="stepper-value js-qty">0</span>
-                <button class="stepper-btn js-plus">+</button>
-                </div>
-
-            </div>
-        `).join("");
-    }
-
-    if(menuContainer){
-        menuContainer.innerHTML = menuItems.map(item => `
-            <div class="menu-row"
-                 data-name="${item.name}"
-                 data-price="${item.price}">
-
-                <div class="menu-row__thumb"></div>
-                <div class="menu-row__info">
-                    <h4>${item.name}</h4>
-                    <p>
-                        ${item.isVegetarian ? "🌱 Veg" : ""}
-                        ${item.calories ? item.calories + " kcal" : ""}
-                    </p>
-                </div>
-
-                <div class="menu-row__price">${Number(item.price).toFixed(3)} OMR</div>
-
-                <button class="btn-add js-add-btn">Add</button>
-                <div class="stepper active" style="display:none;">
-                <button class="stepper-btn js-minus">−</button>
-                <span class="stepper-value js-qty">0</span>
-                <button class="stepper-btn js-plus">+</button>
-                </div>
-            </div>`).join("");
-    }
-}
-
-import { api } from './api.js';
-
-const params = new URLSearchParams(window.location.search);
-
-const RESTAURANT_ID = params.get('restaurantId') || 1;
-const CUSTOMER_ID = 1;
-
-let restaurant = null;
-let menuItems = [];
-let combos = [];
-let cart = [];
-
-document.addEventListener('DOMContentLoaded', () => {
-    initMenu();    
-    const backBtn = document.querySelector('.back-btn');
-    if (backBtn) {
-        backBtn.addEventListener('click', () => {
-            window.location.href = "index.html";
-        });
-    }
-    /*setupStepperButtons();*/
-});
-
-async function initMenu() {
-    try {
-        [restaurant, menuItems, combos] = await Promise.all([
-            api(`/restaurants/${RESTAURANT_ID}`),
-            api(`/restaurants/${RESTAURANT_ID}/menu`),
-            api(`/restaurants/${RESTAURANT_ID}/combos`)
-        ]);
-
-        console.log("Restaurant:", restaurant);
-        console.log("Menu Items:", menuItems);
-        console.log("Combos:", combos);
+        if (results[0].status === 'fulfilled') restaurant = results[0].value;
+        if (results[1].status === 'fulfilled') menuItems = results[1].value;
+        if (results[2].status === 'fulfilled') combos = results[2].value;
 
         updateRestaurantInfo();
-        renderMenuFromAPI();
-        console.log("Buttons:", document.querySelectorAll(".js-add-btn").length);
-        console.log("Plus:", document.querySelectorAll(".js-plus").length);
-        console.log("Minus:", document.querySelectorAll(".js-minus").length);        
-        setupAddButtons();
-        setupStepperButtons();
+        setupCartButtons();
 
     } catch (err) {
-        console.error("Loading error:",err);
+        console.error("Loading error:", err);
     }
 }
 
-function updateRestaurantInfo(){
+function updateRestaurantInfo() {
+    if (!restaurant) return;
 
-    if(!restaurant) return;
+    const title = document.querySelector(".restaurant-meta h1");
+    const details = document.querySelector(".restaurant-meta p");
 
-    const title =document.querySelector(".restaurant-meta h1");
-
-    const details =document.querySelector(".restaurant-meta p");
-
-    if(title){
-        title.textContent = restaurant.name;
-    }
-
-    if(details){
+    if (title) title.textContent = restaurant.name;
+    if (details) {
         details.innerHTML = `${restaurant.cuisineType}
         <span class="dot">•</span>
-        <span class="star-rating">
-        ★ ${restaurant.averageRating ?? "0.0"}
-        </span>`;
+        <span class="star-rating">★ ${restaurant.averageRating ?? "4.6"}</span>`;
     }
 }
 
-function renderMenuFromAPI(){
-    const combosContainer = document.querySelector(".combos-grid");
-    const menuContainer = document.querySelector(".menu-stack");
-
-    if(combosContainer){
-        combosContainer.innerHTML = combos.map(combo => `
-            <div class="combo-card"
-                 data-name="${combo.name}"
-                 data-price="${combo.price}">
-
-                <div class="combo-info">
-                    <h4>${combo.name}</h4>
-                    <div class="combo-price">
-                        ${Number(combo.price).toFixed(3)} OMR
-                    </div>
-                </div>
-
-                <button class="btn-add-combo js-add-btn">Add</button>
-
-                <div class="stepper active" style="display:none;">
-                <button class="stepper-btn js-minus">−</button>
-                <span class="stepper-value js-qty">0</span>
-                <button class="stepper-btn js-plus">+</button>
-                </div>
-
-            </div>
-        `).join("");
-    }
-
-    if(menuContainer){
-        menuContainer.innerHTML = menuItems.map(item => `
-            <div class="menu-row"
-                 data-name="${item.name}"
-                 data-price="${item.price}">
-
-                <div class="menu-row__thumb"></div>
-                <div class="menu-row__info">
-                    <h4>${item.name}</h4>
-                    <p>
-                        ${item.isVegetarian ? "🌱 Veg" : ""}
-                        ${item.calories ? item.calories + " kcal" : ""}
-                    </p>
-                </div>
-
-                <div class="menu-row__price">${Number(item.price).toFixed(3)} OMR</div>
-
-                <button class="btn-add js-add-btn">Add</button>
-                <div class="stepper active" style="display:none;">
-                <button class="stepper-btn js-minus">−</button>
-                <span class="stepper-value js-qty">0</span>
-                <button class="stepper-btn js-plus">+</button>
-                </div>
-            </div>`).join("");
-    }
-}
-
-function setupAddButtons() {
-    document.querySelectorAll(".js-add-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            const card = button.closest(".menu-row, .combo-card");
+function setupCartButtons() {
+    document.addEventListener("click", function(e) {
+        // ADD BUTTON
+        const addBtn = e.target.closest(".js-add-btn");
+        if (addBtn) {
+            const card = addBtn.closest(".ledger-row, .menu-row, .combo-card");
+            if (!card) return;
+            
             const name = card.dataset.name;
             const price = Number(card.dataset.price);
+
             addCartLine(name, price);
-            button.style.display = "none";
-            const stepper = card.querySelector(".stepper");
-            if(stepper){
-                stepper.style.display = "flex";
-            }
-            card.querySelector(".js-qty").textContent = "1";
-        });
-    });
-}
+            updateCardUI(card, 1);
+            return;
+        }
 
-
-
-function updateMenuQuantity(name){
-    document.querySelectorAll(".menu-row, .combo-card").forEach(card=>{
-        if(card.dataset.name === name){
+        // PLUS BUTTON
+        const plusBtn = e.target.closest(".js-plus");
+        if (plusBtn) {
+            const card = plusBtn.closest(".menu-row, .combo-card");
+            if (!card) return;
+            
+            const name = card.dataset.name;
+            const price = Number(card.dataset.price);
             const qtyElement = card.querySelector(".js-qty");
-            if(qtyElement){
-                const item = cart.find(i => i.name === name);
-                qtyElement.textContent = item ? item.qty : 0;
-            }
+            let qty = Number(qtyElement.textContent);
+
+            qty++;
+            updateCardUI(card, qty);
+            updateCartQuantity(name, price, qty);
+            return;
+        }
+        
+        // MINUS BUTTON
+        const minusBtn = e.target.closest(".js-minus");
+        if (minusBtn) {
+            const card = minusBtn.closest(".menu-row, .combo-card");
+            if (!card) return;
+            
+            const name = card.dataset.name;
+            const price = Number(card.dataset.price);
+            const qtyElement = card.querySelector(".js-qty");
+            let qty = Number(qtyElement.textContent);
+
+            qty--;
+            if (qty < 0) qty = 0;
+
+            updateCardUI(card, qty);
+            updateCartQuantity(name, price, qty);
         }
     });
 }
 
-function renderCart(){
-        console.log("Rendering cart");
+function updateCardUI(card, qty) {
+    const qtyElement = card.querySelector(".js-qty");
+    const stepper = card.querySelector(".stepper");
+    const addBtn = card.querySelector(".js-add-btn");
 
-    const container =document.getElementById("cart-items-container");
-    console.log(container);
+    if (qtyElement) qtyElement.textContent = qty;
 
-    let subtotal = 0;
-    container.innerHTML = cart.map(item=>{
-        const total =
-        item.unitPrice * item.qty;
-        subtotal += total;
-
-        return `
-        <div class="cart-line-row">
-            <span>${item.name} × ${item.qty}
-            </span>
-            <span>${total.toFixed(3)}</span>
-        </div>
-        `;}).join("");
-
-    document.getElementById("subtotal-val").textContent = subtotal.toFixed(3);
-    document.getElementById("total-val").textContent = (subtotal + 0.500).toFixed(3);
+    if (qty > 0) {
+        if (addBtn) addBtn.style.display = "none";
+        if (stepper) {
+            stepper.style.display = "flex";
+            stepper.classList.add("active");
+        }
+    } else {
+        if (stepper) {
+            stepper.style.display = "none";
+            stepper.classList.remove("active");
+        }
+        if (addBtn) addBtn.style.display = "inline-block";
+    }
 }
 
-function addCartLine(name, price){
-    const item = cart.find(i => i.name === name);
-    if(item){
-        item.qty++;
+function renderCart() {
+    const container = document.getElementById("cart-items-container");
+    if (!container) return;
+
+    let subtotal = 0;
+    
+    if (cart.length === 0) {
+        container.innerHTML = `<div class="cart-line-row"><span class="cart-item-name" style="color: #888;">Your cart is empty</span><span class="cart-line-total">0.000</span></div>`;
+    } else {
+        container.innerHTML = cart.map(item => {
+            const total = item.unitPrice * item.qty;
+            subtotal += total;
+
+            return `
+            <div class="cart-line-row">
+                <span class="cart-item-name">${item.name} ×${item.qty}</span>
+                <span class="cart-line-total">${total.toFixed(3)}</span>
+            </div>`;
+        }).join("");
     }
-    else{
-        cart.push({name:name,unitPrice:price,qty:1});
+
+    const subtotalEl = document.getElementById("subtotal-val");
+    const totalEl = document.getElementById("total-val");
+    const minOrderEl = document.querySelector(".min-order-status");
+
+    if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(3);
+    if (totalEl) totalEl.textContent = (subtotal > 0 ? subtotal + 0.500 : 0.500).toFixed(3);
+
+    if (minOrderEl) {
+        if (subtotal >= 2.0) {
+            minOrderEl.textContent = "min order 2.000 met";
+            minOrderEl.style.color = "";
+        } else {
+            minOrderEl.textContent = `add ${(2.0 - subtotal).toFixed(3)} OMR more to reach minimum order`;
+            minOrderEl.style.color = "#e53e3e";
+        }
+    }
+}
+
+function addCartLine(name, price) {
+    const item = cart.find(i => i.name === name);
+    if (item) {
+        item.qty++;
+    } else {
+        cart.push({ name: name, unitPrice: price, qty: 1 });
     }
     renderCart();
 }
 
-/*function updateMenuQuantity(name){
-    document.querySelectorAll(".menu-row, .combo-card").forEach(card=>{
-        if(card.dataset.name === name){
-            const qtyElement = card.querySelector(".js-qty");
-            if(qtyElement){
-                const item = cart.find(i => i.name === name);
-                qtyElement.textContent = item ? item.qty : 0;
-            }
-        }
-    });
-}*/
-
-function renderCart(){
-    const container=document.getElementById("cart-items-container");
-    let subtotal = 0;
-
-    container.innerHTML = cart.map(item=>{
-        const total = item.unitPrice * item.qty;
-        subtotal += total;
-        return `<div class="cart-line-row">
-            <span>${item.name} × ${item.qty}</span>
-            <span>${total.toFixed(3)}</span>
-        </div>`;}).join("");
-
-    document.getElementById("subtotal-val").textContent =subtotal.toFixed(3);
-    document.getElementById("total-val").textContent =(subtotal + 0.500).toFixed(3);
-}
-
-function setupStepperButtons(){
-    document.querySelectorAll(".js-plus").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-            const card = btn.closest(".menu-row, .combo-card");
-            const qtyElement = card.querySelector(".js-qty");
-            let qty = Number(qtyElement.textContent);
-            qty++;
-            qtyElement.textContent = qty;
-
-            updateCartQuantity(card.dataset.name,Number(card.dataset.price),qty);
-        });
-    });
-
-
-    document.querySelectorAll(".js-minus").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-            const card = btn.closest(".menu-row, .combo-card");
-            const qtyElement = card.querySelector(".js-qty");
-            let qty = Number(qtyElement.textContent);
-
-            if(qty > 0){
-                qty--;
-            }
-
-            qtyElement.textContent = qty;
-
-            updateCartQuantity(card.dataset.name,Number(card.dataset.price),qty);
-
-            if(qty === 0){
-               card.querySelector(".stepper").style.display="none";
-                const addBtn = card.querySelector(".js-add-btn");
-                if(addBtn){
-                    addBtn.style.display="inline-block";
-                }
-            }
-        });
-    });
-}
-
-function updateCartQuantity(name, price, qty){
+function updateCartQuantity(name, price, qty) {
     const item = cart.find(i => i.name === name);
-    if(qty === 0){
+    if (qty === 0) {
         cart = cart.filter(i => i.name !== name);
-    }
-    else if(item){
+    } else if (item) {
         item.qty = qty;
-    }
-    else{
-        cart.push({name:name,unitPrice:price,qty:qty});
+    } else {
+        cart.push({ name: name, unitPrice: price, qty: qty });
     }
     renderCart();
 }
